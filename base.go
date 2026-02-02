@@ -63,7 +63,7 @@ type Range struct {
 }
 
 // LanguageID - language identifier represented as a string.
-type LanguageID string
+type LanguageID = string
 
 const (
 	// LanguagePHP is the identifier for PHP documents.
