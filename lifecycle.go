@@ -1,5 +1,7 @@
 package protocol
 
+import "encoding/json"
+
 const (
 	MethodInitialize = "initialize"
 
@@ -69,7 +71,7 @@ type InitializeResult struct {
 //
 // See https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#cancelRequest
 type CancelParams struct {
-	Id string `json:"id"`
+	Id json.Number `json:"id"`
 }
 
 // TraceValue - The LSP allows the client to control the tracing of the server.
