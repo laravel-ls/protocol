@@ -16,8 +16,8 @@ import (
     "fmt"
     "io"
     "context"
-	"encoding/json"
-	"github.com/sourcegraph/jsonrpc2"
+    "encoding/json"
+    "github.com/sourcegraph/jsonrpc2"
 )
 
 func handler(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (any, error) {
@@ -28,33 +28,33 @@ func handler(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (a
         if err := json.Unmarshal(*req.Params, &params); err != nil {
             return nil, err
         }
-        // handle initialize
-	case protocol.MethodTextDocumentDidChange:
-		var params protocol.DidChangeTextDocumentParams
-		if err := json.Unmarshal(*req.Params, &params); err != nil {
-			return nil, err
-		}
-        // handle did change
-	default:
-		// Respond with a method not found error
-		return nil, &jsonrpc2.Error{
-			Code:    jsonrpc2.CodeMethodNotFound,
-			Message: fmt.Sprintf("Method %s not found", req.Method),
-		}
+    // handle initialize
+    case protocol.MethodTextDocumentDidChange:
+        var params protocol.DidChangeTextDocumentParams
+        if err := json.Unmarshal(*req.Params, &params); err != nil {
+            return nil, err
+        }
+    // handle did change
+    default:
+        // Respond with a method not found error
+        return nil, &jsonrpc2.Error{
+            Code:    jsonrpc2.CodeMethodNotFound,
+            Message: fmt.Sprintf("Method %s not found", req.Method),
+        }
     }
     return nil, nil
 }
 
 func (s Server) Run(ctx context.Context, conn io.ReadWriteCloser) error {
-	stream := jsonrpc2.NewBufferedStream(conn, jsonrpc2.VSCodeObjectCodec{})
-	rpc := jsonrpc2.NewConn(ctx, stream, jsonrpc2.HandlerWithError(s.dispatch))
+    stream := jsonrpc2.NewBufferedStream(conn, jsonrpc2.VSCodeObjectCodec{})
+    rpc := jsonrpc2.NewConn(ctx, stream, jsonrpc2.HandlerWithError(s.dispatch))
 
-	select {
-	case <-ctx.Done():
-		return fmt.Errorf("context closed")
-	case <-rpc.DisconnectNotify():
-		return nil
-	}
+    select {
+    case <-ctx.Done():
+        return fmt.Errorf("context closed")
+    case <-rpc.DisconnectNotify():
+        return nil
+    }
 }
 ```
 
