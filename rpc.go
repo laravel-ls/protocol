@@ -43,9 +43,5 @@ func IsLspRPCErrorCode(code int64) bool {
 		return true
 	}
 
-	if code == RPCServerNotInitialized || code == RPCUnknownErrorCode {
-		return true
-	}
-
-	return false
+	return code == RPCServerNotInitialized || code == RPCUnknownErrorCode
 }
