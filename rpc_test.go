@@ -6,7 +6,7 @@ import (
 	"github.com/laravel-ls/protocol"
 )
 
-func Test_IsLspRPCErrorCode(t *testing.T) {
+func Test_Rpc_IsLspRPCErrorCode(t *testing.T) {
 	if protocol.IsLspRPCErrorCode(5000) {
 		t.Errorf("5000 is not a valid code, but function returned true")
 	}
