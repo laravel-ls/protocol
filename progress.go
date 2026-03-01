@@ -2,6 +2,11 @@ package protocol
 
 import "encoding/json"
 
+const (
+	MethodWindowWorkDoneProgressCreate = "window/workDoneProgress/create"
+	MethodWindowWorkDoneProgressCancel = "window/workDoneProgress/cancel"
+)
+
 // ProgressToken - A token that can be used to report work done progress.
 // Can be a string or a number.
 //
@@ -38,4 +43,24 @@ type WorkDoneProgressParams struct {
 type PartialResultParams struct {
 	// PartialResultToken is a token for handling partial result updates.
 	PartialResultToken *ProgressToken `json:"partialResultToken,omitempty"`
+}
+
+// WorkDoneProgressCreateParams - The parameters of a work done progress create request.
+//
+// See https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workDoneProgressCreateParams
+//
+// @since 3.15.0
+type WorkDoneProgressCreateParams struct {
+	// The token to be used to report progress.
+	Token ProgressToken `json:"token"`
+}
+
+// WorkDoneProgressCancelParams - The parameters of a work done progress cancel notification.
+//
+// See https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workDoneProgressCancelParams
+//
+// @since 3.15.0
+type WorkDoneProgressCancelParams struct {
+	// The token to be used to report progress.
+	Token ProgressToken `json:"token"`
 }
