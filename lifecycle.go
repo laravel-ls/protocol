@@ -6,6 +6,8 @@ const (
 	MethodInitialize = "initialize"
 
 	MethodInitialized = "initialized"
+
+	MethodCancelRequest = "$/cancelRequest"
 )
 
 // InitializeParams - The initialize parameters.
