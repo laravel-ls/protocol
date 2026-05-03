@@ -6,7 +6,8 @@ import (
 )
 
 const (
-	MethodTextDocumentDiagnostic = "textDocument/diagnostic"
+	MethodTextDocumentDiagnostic         = "textDocument/diagnostic"
+	MethodTextDocumentPublishDiagnostics = "textDocument/publishDiagnostics"
 )
 
 // DocumentDiagnosticParams - Parameters of the document diagnostic request.
@@ -27,6 +28,24 @@ type DocumentDiagnosticParams struct {
 	// The current version of the document.
 	// If provided, servers can avoid computing diagnostics again if the document version hasn’t changed.
 	PreviousResultID string `json:"previousResultId,omitempty"`
+}
+
+// PublishDiagnosticsParams - The parameters of a publish diagnostics notification.
+//
+// @since 3.0.0
+//
+// See https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#publishDiagnosticsParams
+type PublishDiagnosticsParams struct {
+	// The URI for which diagnostic information is reported.
+	URI DocumentURI `json:"uri"`
+
+	// Optional the version number of the document the diagnostics are published for.
+	//
+	// @since 3.15.0
+	Version int `json:"version,omitempty"`
+
+	// An array of diagnostic information items.
+	Diagnostics []Diagnostic `json:"diagnostics"`
 }
 
 // DocumentDiagnosticReport is either a full or an unchanged diagnostic report.

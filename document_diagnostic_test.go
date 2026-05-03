@@ -24,3 +24,26 @@ func Test_DocumentDiagnostic_StructsUnmarshalValidJSON(t *testing.T) {
 		t.Fatalf("unexpected DocumentDiagnosticReport: %+v", report)
 	}
 }
+
+func Test_PublishDiagnosticsParams_UnmarshalValidJSON(t *testing.T) {
+	var params protocol.PublishDiagnosticsParams
+	if err := json.Unmarshal([]byte(`{
+		"uri":"file:///tmp/main.go",
+		"version":2,
+		"diagnostics":[{"range":{"start":{"line":1,"character":1},"end":{"line":1,"character":3}},"message":"example diagnostic"}]
+	}`), &params); err != nil {
+		t.Fatalf("unmarshal PublishDiagnosticsParams failed: %v", err)
+	}
+
+	if params.URI != "file:///tmp/main.go" {
+		t.Fatalf("unexpected URI: %q", params.URI)
+	}
+
+	if params.Version != 2 {
+		t.Fatalf("unexpected Version: %d", params.Version)
+	}
+
+	if len(params.Diagnostics) != 1 || params.Diagnostics[0].Message != "example diagnostic" {
+		t.Fatalf("unexpected Diagnostics: %+v", params.Diagnostics)
+	}
+}
